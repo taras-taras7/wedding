@@ -1,0 +1,927 @@
+/* Базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #ffffff;
+    --cream: #fafafa;
+    --light-pastel: #f8f6f0;
+    --lemon-yellow: #fff44f;
+    --lemon-green: #8fbc8f;
+    --vine-green: #2d5016;
+    --pastel-pink: #f5e1e1;
+    --pastel-blue: #f8fac2;
+    --pastel-green: #e1f5e1;
+    --text-dark: #2c2c2c;
+    --pastel-yellow: #fff9c4;
+}
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--light-pastel);
+    scroll-behavior: smooth;
+    font-weight: 300;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Навигация */
+.main-nav {
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 1rem 0;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--vine-green);
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+    font-weight: 400;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.main-nav a:hover {
+    color: var(--lemon-green);
+}
+
+/* Анимированные лимоны */
+.lemon-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.lemon {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle at 30% 30%, #fff9c4, #ffeb3b 60%, #fbc02d);
+    border-radius: 50% 40% 50% 40% / 60% 50% 60% 50%;
+    opacity: 0.2;
+    animation: float 10s ease-in-out infinite;
+    filter: blur(0.8px);
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.3);
+}
+
+.lemon::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 8px;
+    background: #8bc34a;
+    border-radius: 50%;
+    opacity: 0.6;
+}
+
+.lemon::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 12px;
+    background: #388e3c;
+    border-radius: 50% 50% 0 0;
+    opacity: 0.8;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+
+    33% {
+        transform: translateY(-30px) rotate(3deg) scale(1.05);
+    }
+
+    66% {
+        transform: translateY(15px) rotate(-2deg) scale(0.95);
+    }
+}
+
+/* Герой-секция */
+.hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 4rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(12px);
+    animation: fadeInUp 1.5s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 20px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-title {
+    font-family: 'Parisienne', cursive;
+    font-size: 5.5rem;
+    font-weight: 400;
+    color: var(--vine-green);
+    margin-bottom: 1.5rem;
+    animation: titleAnimation 2.5s ease-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2px;
+}
+
+@keyframes titleAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        filter: blur(5px);
+    }
+
+    60% {
+        transform: translateY(-5px) scale(1.02);
+        filter: blur(0px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.ampersand {
+    color: var(--lemon-green);
+    font-size: 4.5rem;
+    margin: 0 1.5rem;
+    animation: gentlePulse 3s infinite;
+    font-weight: 300;
+}
+
+@keyframes gentlePulse {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.08) rotate(2deg);
+        opacity: 1;
+    }
+}
+
+.wedding-date {
+    font-size: 2.2rem;
+    color: var(--vine-green);
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-family: 'Cormorant Garamond', serif;
+    animation: fadeIn 3s ease-out;
+    letter-spacing: 1px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.invitation-text {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-dark);
+    animation: fadeIn 3s ease-out 0.7s both;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* Счетчик */
+.countdown-container {
+    margin-top: 3rem;
+    animation: fadeIn 3s ease-out 1.2s both;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 1rem;
+}
+
+.countdown-item {
+    text-align: center;
+    animation: gentleBounce 1.2s ease-out;
+}
+
+@keyframes gentleBounce {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.countdown-number {
+    display: block;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--vine-green);
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 1px;
+}
+
+.countdown-label {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 300;
+}
+
+/* Секции */
+section {
+    padding: 5rem 0;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--vine-green);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* Виноградная лоза */
+.vine-decoration {
+    width: 100px;
+    height: 20px;
+    margin: 0 auto;
+    background: radial-gradient(circle at 50% 0%, var(--vine-green) 30%, transparent 30%),
+        radial-gradient(circle at 50% 100%, var(--vine-green) 30%, transparent 30%);
+    background-size: 20px 20px;
+    opacity: 0.6;
+}
+
+/* История любви */
+.love-story {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+        url('assets/lemon-branches-bg.jpg') center/cover;
+    position: relative;
+}
+
+.love-story .container {
+    position: relative;
+    z-index: 2;
+}
+
+.story-timeline {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.story-item {
+    display: flex;
+    margin-bottom: 4rem;
+    align-items: center;
+    gap: 3rem;
+}
+
+.story-item.reverse {
+    flex-direction: row-reverse;
+}
+
+.story-image {
+    flex: 1;
+    min-height: 300px;
+    background: var(--light-pastel);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 7px 45px rgba(0, 0, 0, 0.08);
+}
+
+.story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-content {
+    flex: 1;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.08);
+    font-size: 1.2rem;
+}
+
+.story-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--vine-green);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.story-date {
+    display: inline-block;
+    background: var(--pastel-yellow);
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+/* Детали свадьбы */
+.details {
+    background: linear-gradient(135deg, var(--pastel-green) 0%, var(--pastel-blue) 100%);
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}
+
+.detail-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 320px;
+    font-size: 1.1rem;
+}
+
+.detail-card:hover {
+    transform: translateY(-5px);
+}
+
+.detail-icon {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.detail-icon img {
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.dress-code-colors {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.color-swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.detail-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--vine-green);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.detail-time {
+    font-size: 1.2rem;
+    color: var(--lemon-green);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Подарки */
+.gifts {
+    background: var(--white);
+}
+
+.gift-card {
+    display: flex;
+    background: var(--light-pastel);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.gift-image {
+    flex: 1;
+    background: var(--lemon-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    min-height: 250px;
+}
+
+.gift-image img {
+    max-width: 180px;
+    opacity: 0.9;
+}
+
+.gift-content {
+    flex: 2;
+    padding: 3rem;
+    font-size: 1.15rem;
+}
+
+.gift-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--vine-green);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.gift-note {
+    font-style: italic;
+    color: var(--vine-green);
+    margin-top: 1rem;
+    border-left: 3px solid var(--lemon-green);
+    padding-left: 1rem;
+}
+
+/* Местоположение */
+.location {
+    background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-blue) 100%);
+}
+
+.location-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    font-size: 1.15rem;
+}
+
+.location-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--vine-green);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.location-link {
+    color: var(--vine-green);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.location-link:hover {
+    color: var(--lemon-green);
+    text-decoration: underline;
+}
+
+.important-note {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: pulse 2s infinite;
+}
+
+.warning-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.important-note p {
+    margin: 0;
+    color: #856404;
+    font-weight: 500;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.location-features {
+    margin-top: 2rem;
+}
+
+.location-features h4 {
+    color: var(--vine-green);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.location-features ul {
+    list-style: none;
+}
+
+.location-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.location-features li:before {
+    content: "•";
+    color: var(--lemon-green);
+    position: absolute;
+    left: 0;
+    font-size: 1.5rem;
+}
+
+#wedding-map {
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: var(--light-pastel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.static-map {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Форма RSVP */
+.rsvp {
+    background: var(--white);
+}
+
+.rsvp-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 1.2rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--lemon-green);
+    box-shadow: 0 0 0 3px rgba(143, 188, 143, 0.15);
+    transform: translateY(-2px);
+}
+
+.form-group textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1.2rem;
+    background: var(--vine-green);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: 500;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.5px;
+}
+
+.submit-btn:hover {
+    background: var(--lemon-green);
+    transform: translateY(-2px);
+}
+
+.form-info {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(143, 188, 143, 0.1);
+    border-radius: 10px;
+}
+
+.form-info p {
+    font-size: 0.9rem;
+    color: var(--vine-green);
+    font-weight: 300;
+}
+
+/* Аудио контролы */
+.music-controls {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+}
+
+.music-btn {
+    background: rgba(45, 80, 22, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+}
+
+.music-btn:hover {
+    background: rgba(143, 188, 143, 0.9);
+    transform: scale(1.15) rotate(15deg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Футер */
+.footer {
+    background: var(--vine-green);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.footer-contact {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .main-nav ul {
+        flex-wrap: wrap;
+        padding: 0.8rem 0;
+    }
+
+    .main-nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.95rem;
+        margin: 0.2rem;
+    }
+
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 80px 0 2rem;
+    }
+
+    .hero-content {
+        padding: 2.5rem 1.5rem;
+        margin: 1rem;
+        margin-top: 0;
+    }
+
+    .main-title {
+        font-size: 3.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .name-part {
+        display: block;
+    }
+
+    .ampersand {
+        font-size: 2.8rem;
+        margin: 0.2rem 0;
+    }
+
+    .wedding-date {
+        font-size: 1.6rem;
+    }
+
+    .invitation-text {
+        font-size: 1.1rem;
+    }
+
+    .countdown {
+        gap: 1.5rem;
+    }
+
+    .countdown-number {
+        font-size: 2.2rem;
+    }
+
+    section {
+        padding: 3rem 0;
+    }
+
+    .story-item,
+    .story-item.reverse {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .story-content {
+        padding: 1.5rem;
+    }
+
+    .location-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .gift-card {
+        flex-direction: column;
+    }
+
+    .gift-image {
+        min-height: 200px;
+        padding: 2rem;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .detail-card {
+        max-width: 100%;
+    }
+
+    .important-note {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .music-controls {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .ampersand {
+        font-size: 2.2rem;
+    }
+
+    .hero-content {
+        padding: 2rem 1rem;
+    }
+
+    .countdown {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .countdown-item {
+        margin-bottom: 1rem;
+    }
+
+    .dress-code-colors {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: 70px 0 1rem;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-content {
+        padding: 1.5rem;
+    }
+}
+
+/* iOS Safari специфичные стили */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Убедимся, что навигация не перекрывает контент при скролле */
+html {
+    scroll-padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+    html {
+        scroll-padding-top: 100px;
+    }
+}
