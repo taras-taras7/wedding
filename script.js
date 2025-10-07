@@ -1,3 +1,10 @@
+// Установка CSS переменных для safe-area
+function setSafeAreaVariables() {
+    const root = document.documentElement;
+    const safeAreaTop = getComputedStyle(root).getPropertyValue('--safe-area-top') || '0px';
+    root.style.setProperty('--computed-safe-area-top', safeAreaTop);
+}
+
 // Счетчик обратного времени
 function updateCountdown() {
     const weddingDate = new Date('2026-09-05T15:00:00').getTime();
@@ -31,7 +38,10 @@ function createLemonAnimation() {
     const container = document.getElementById('lemon-animation');
     if (!container) return;
 
-    for (let i = 0; i < 50; i++) {
+    // Очищаем существующие лимоны
+    container.innerHTML = '';
+
+    for (let i = 0; i < 40; i++) {
         const lemon = document.createElement('div');
         lemon.className = 'lemon';
 
@@ -40,7 +50,7 @@ function createLemonAnimation() {
         lemon.style.animationDelay = (Math.random() * 8) + 's';
         lemon.style.animationDuration = (8 + Math.random() * 8) + 's';
 
-        const size = 60 + Math.random() * 30;
+        const size = 40 + Math.random() * 40;
         lemon.style.width = size + 'px';
         lemon.style.height = size + 'px';
         lemon.style.opacity = 0.15 + Math.random() * 0.1;
@@ -65,13 +75,16 @@ function initMusicPlayer() {
             toggleBtn.textContent = '🔊';
             toggleBtn.style.background = 'rgba(143, 188, 143, 0.9)';
         }).catch(error => {
+            console.log('Autoplay blocked:', error);
             toggleBtn.textContent = '🎵';
             isPlaying = false;
         });
     };
 
+    // Пытаемся запустить автоматически
     playMusic();
 
+    // Запуск по клику на странице
     document.addEventListener('click', function initOnClick() {
         if (!isPlaying) {
             playMusic();
@@ -81,6 +94,7 @@ function initMusicPlayer() {
 
     toggleBtn.addEventListener('click', function (e) {
         e.stopPropagation();
+        e.preventDefault();
 
         if (isPlaying) {
             music.pause();
@@ -90,6 +104,8 @@ function initMusicPlayer() {
             music.play().then(() => {
                 toggleBtn.textContent = '🔊';
                 toggleBtn.style.background = 'rgba(143, 188, 143, 0.9)';
+            }).catch(error => {
+                console.log('Play failed:', error);
             });
         }
         isPlaying = !isPlaying;
@@ -152,13 +168,17 @@ function initSmoothScroll() {
 
             const target = document.querySelector(targetId);
             if (target) {
-                const navHeight = document.querySelector('.main-nav').offsetHeight;
+                const nav = document.querySelector('.main-nav');
+                const navHeight = nav ? nav.offsetHeight : 0;
+                
                 // Увеличиваем отступ для мобильных устройств
                 const isMobile = window.innerWidth <= 768;
-                const offsetTop = target.offsetTop - navHeight - (isMobile ? 40 : 20);
+                const additionalOffset = isMobile ? 30 : 20;
+                
+                const offsetTop = target.offsetTop - navHeight - additionalOffset;
                 
                 window.scrollTo({
-                    top: offsetTop,
+                    top: Math.max(offsetTop, 0),
                     behavior: 'smooth'
                 });
             }
@@ -173,25 +193,69 @@ function setHeroPadding() {
     
     if (nav && hero) {
         const navHeight = nav.offsetHeight;
-        // Увеличиваем отступ для мобильных устройств
         const isMobile = window.innerWidth <= 768;
-        const paddingTop = isMobile ? (navHeight + 30) + 'px' : (navHeight + 10) + 'px';
+        const paddingTop = isMobile ? (navHeight + 20) + 'px' : (navHeight + 10) + 'px';
         
-        hero.style.paddingTop = paddingTop;
+        hero.style.paddingTop = `calc(${paddingTop} + var(--safe-area-top))`;
+    }
+}
+
+// Оптимизация для мобильных устройств
+function optimizeForMobile() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Уменьшаем количество лимонов на мобильных
+        const container = document.getElementById('lemon-animation');
+        if (container) {
+            const lemons = container.querySelectorAll('.lemon');
+            if (lemons.length > 20) {
+                for (let i = 20; i < lemons.length; i++) {
+                    container.removeChild(lemons[i]);
+                }
+            }
+        }
     }
 }
 
 // Основная инициализация
 document.addEventListener('DOMContentLoaded', function () {
+    setSafeAreaVariables();
     updateCountdown();
     createLemonAnimation();
     initMusicPlayer();
     initRSVPForm();
     initSmoothScroll();
     setHeroPadding();
+    optimizeForMobile();
 
-    window.addEventListener('resize', setHeroPadding);
-    window.addEventListener('load', setHeroPadding);
+    // Обработчики событий
+    window.addEventListener('resize', function() {
+        setSafeAreaVariables();
+        setHeroPadding();
+        optimizeForMobile();
+    });
+    
+    window.addEventListener('load', function() {
+        setSafeAreaVariables();
+        setHeroPadding();
+    });
+    
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            setSafeAreaVariables();
+            setHeroPadding();
+            optimizeForMobile();
+        }, 300);
+    });
 
+    // Обновление счетчика каждую минуту
     setInterval(updateCountdown, 60000);
 });
+
+// Fallback для safe-area
+if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
+    document.documentElement.classList.add('safe-area-supported');
+} else {
+    document.documentElement.classList.add('safe-area-not-supported');
+}
