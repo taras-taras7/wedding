@@ -17,6 +17,8 @@
     --pastel-green: #e1f5e1;
     --text-dark: #2c2c2c;
     --pastel-yellow: #fff9c4;
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 body {
@@ -26,6 +28,7 @@ body {
     background-color: var(--light-pastel);
     scroll-behavior: smooth;
     font-weight: 300;
+    padding-top: var(--safe-area-top);
 }
 
 .container {
@@ -42,6 +45,14 @@ body {
     width: 100%;
     top: 0;
     z-index: 1000;
+    padding-top: var(--safe-area-top);
+    min-height: calc(70px + var(--safe-area-top));
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .container {
+    width: 100%;
 }
 
 .main-nav ul {
@@ -49,6 +60,7 @@ body {
     justify-content: center;
     list-style: none;
     padding: 1rem 0;
+    flex-wrap: wrap;
 }
 
 .main-nav a {
@@ -61,6 +73,7 @@ body {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.1rem;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .main-nav a:hover {
@@ -119,16 +132,12 @@ body {
 }
 
 @keyframes float {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: translateY(0px) rotate(0deg) scale(1);
     }
-
     33% {
         transform: translateY(-30px) rotate(3deg) scale(1.05);
     }
-
     66% {
         transform: translateY(15px) rotate(-2deg) scale(0.95);
     }
@@ -136,25 +145,29 @@ body {
 
 /* Герой-секция */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding-top: calc(100px + var(--safe-area-top));
+    padding-bottom: 2rem;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
     background: rgba(255, 255, 255, 0.92);
-    padding: 4rem;
+    padding: 3rem 2rem;
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(12px);
     animation: fadeInUp 1.5s ease-out;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    margin-top: 20px;
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    max-width: 800px;
 }
 
 @keyframes fadeInUp {
@@ -162,7 +175,6 @@ body {
         opacity: 0;
         transform: translateY(60px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -171,13 +183,14 @@ body {
 
 .main-title {
     font-family: 'Parisienne', cursive;
-    font-size: 5.5rem;
+    font-size: 4rem;
     font-weight: 400;
     color: var(--vine-green);
     margin-bottom: 1.5rem;
     animation: titleAnimation 2.5s ease-out;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     letter-spacing: 2px;
+    line-height: 1.2;
 }
 
 @keyframes titleAnimation {
@@ -186,12 +199,10 @@ body {
         transform: translateY(30px) scale(0.9);
         filter: blur(5px);
     }
-
     60% {
         transform: translateY(-5px) scale(1.02);
         filter: blur(0px);
     }
-
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -200,20 +211,18 @@ body {
 
 .ampersand {
     color: var(--lemon-green);
-    font-size: 4.5rem;
-    margin: 0 1.5rem;
+    font-size: 3.5rem;
+    margin: 0 1rem;
     animation: gentlePulse 3s infinite;
     font-weight: 300;
+    display: inline-block;
 }
 
 @keyframes gentlePulse {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: scale(1) rotate(0deg);
         opacity: 0.8;
     }
-
     50% {
         transform: scale(1.08) rotate(2deg);
         opacity: 1;
@@ -221,7 +230,7 @@ body {
 }
 
 .wedding-date {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     color: var(--vine-green);
     margin-bottom: 2rem;
     font-weight: 300;
@@ -234,37 +243,38 @@ body {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
 }
 
 .invitation-text {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
     color: var(--text-dark);
     animation: fadeIn 3s ease-out 0.7s both;
     font-weight: 300;
-    line-height: 1.8;
+    line-height: 1.6;
 }
 
 /* Счетчик */
 .countdown-container {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     animation: fadeIn 3s ease-out 1.2s both;
 }
 
 .countdown {
     display: flex;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 2rem;
     margin-top: 1rem;
+    flex-wrap: wrap;
 }
 
 .countdown-item {
     text-align: center;
     animation: gentleBounce 1.2s ease-out;
+    min-width: 80px;
 }
 
 @keyframes gentleBounce {
@@ -272,11 +282,9 @@ body {
         transform: translateY(20px);
         opacity: 0;
     }
-
     60% {
         transform: translateY(-5px);
     }
-
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -285,7 +293,7 @@ body {
 
 .countdown-number {
     display: block;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     font-weight: 300;
     color: var(--vine-green);
     font-family: 'Cormorant Garamond', serif;
@@ -293,7 +301,7 @@ body {
 }
 
 .countdown-label {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-dark);
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -304,7 +312,7 @@ body {
 section {
     padding: 5rem 0;
     position: relative;
-    scroll-margin-top: 80px;
+    scroll-margin-top: calc(100px + var(--safe-area-top));
 }
 
 .section-header {
@@ -336,7 +344,7 @@ section {
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
         url('assets/lemon-branches-bg.jpg') center/cover;
     position: relative;
-    scroll-margin-top: 100px;
+    scroll-margin-top: calc(120px + var(--safe-area-top));
 }
 
 .love-story .container {
@@ -585,11 +593,9 @@ section {
     0% {
         transform: scale(1);
     }
-
     50% {
         transform: scale(1.02);
     }
-
     100% {
         transform: scale(1);
     }
@@ -754,6 +760,7 @@ section {
     color: var(--white);
     text-align: center;
     padding: 2rem 0;
+    padding-bottom: calc(2rem + var(--safe-area-bottom));
 }
 
 .footer-contact {
@@ -764,8 +771,11 @@ section {
 
 /* Адаптивность */
 @media (max-width: 768px) {
+    .main-nav {
+        min-height: calc(60px + var(--safe-area-top));
+    }
+
     .main-nav ul {
-        flex-wrap: wrap;
         padding: 0.8rem 0;
     }
 
@@ -775,19 +785,15 @@ section {
         margin: 0.2rem;
     }
 
-    /* Исправления для мобильных устройств */
     .hero {
+        padding-top: calc(90px + var(--safe-area-top));
+        padding-bottom: 1.5rem;
         min-height: 100vh;
-        height: auto;
-        padding: 100px 0 2rem !important;
-        display: flex;
-        align-items: center;
     }
 
     .hero-content {
-        margin-top: 0;
-        padding: 2.5rem 1.5rem;
-        transform: none !important;
+        padding: 2rem 1.5rem;
+        margin: 1rem 0.5rem;
     }
 
     .main-title {
@@ -796,7 +802,7 @@ section {
         margin-bottom: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 0.3rem;
+        gap: 0.5rem;
     }
 
     .name-part {
@@ -816,38 +822,48 @@ section {
     .invitation-text {
         font-size: 1.1rem;
         margin-bottom: 2rem;
+        line-height: 1.5;
     }
 
     .countdown {
-        gap: 1rem;
-        flex-wrap: wrap;
+        gap: 1.5rem;
     }
 
     .countdown-item {
-        min-width: 80px;
+        min-width: 70px;
     }
 
     .countdown-number {
         font-size: 2rem;
     }
 
+    .countdown-label {
+        font-size: 0.8rem;
+    }
+
     section {
         padding: 4rem 0;
-        scroll-margin-top: 100px;
+        scroll-margin-top: calc(110px + var(--safe-area-top));
     }
 
     .love-story {
-        scroll-margin-top: 120px;
+        scroll-margin-top: calc(130px + var(--safe-area-top));
     }
 
     .story-item,
     .story-item.reverse {
         flex-direction: column;
         gap: 1.5rem;
+        margin-bottom: 3rem;
     }
 
     .story-content {
         padding: 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .story-content h3 {
+        font-size: 1.7rem;
     }
 
     .location-content {
@@ -864,35 +880,52 @@ section {
         padding: 2rem;
     }
 
+    .gift-content {
+        padding: 2rem;
+    }
+
     .details-grid {
         grid-template-columns: 1fr;
         justify-items: center;
+        gap: 1.5rem;
     }
 
     .detail-card {
         max-width: 100%;
+        padding: 1.5rem;
     }
 
     .important-note {
         flex-direction: column;
         text-align: center;
         gap: 0.5rem;
+        padding: 1rem;
     }
 
     .music-controls {
-        bottom: 15px;
-        right: 15px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .music-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.2rem;
     }
 }
 
 @media (max-width: 480px) {
     .hero {
-        padding: 90px 0 1.5rem !important;
+        padding-top: calc(85px + var(--safe-area-top));
+        padding-bottom: 1rem;
     }
 
     .hero-content {
-        padding: 2rem 1rem;
-        margin: 0.5rem;
+        padding: 1.5rem 1rem;
     }
 
     .main-title {
@@ -907,23 +940,40 @@ section {
         font-size: 1.2rem;
     }
 
-    .countdown {
-        flex-direction: column;
-        gap: 0.5rem;
+    .invitation-text {
+        font-size: 1rem;
     }
 
-    .countdown-item {
-        margin-bottom: 0.5rem;
+    .countdown {
+        gap: 1rem;
+    }
+
+    .countdown-number {
+        font-size: 1.8rem;
     }
 
     .dress-code-colors {
-        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .color-swatch {
+        width: 25px;
+        height: 25px;
+    }
+
+    section {
+        padding: 3rem 0;
+    }
+
+    .story-image {
+        min-height: 200px;
     }
 }
 
 @media (max-width: 768px) and (orientation: landscape) {
     .hero {
-        padding: 70px 0 1rem;
+        padding-top: calc(80px + var(--safe-area-top));
+        min-height: 100vh;
     }
 
     .main-title {
@@ -932,24 +982,41 @@ section {
 
     .hero-content {
         padding: 1.5rem;
+        margin: 0.5rem;
+    }
+
+    .countdown {
+        gap: 1rem;
     }
 }
 
 /* Исправление для iOS Safari */
 @supports (-webkit-touch-callout: none) {
     .hero {
-        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+    
+    body {
         min-height: -webkit-fill-available;
     }
 }
 
 /* Убедимся, что навигация не перекрывает контент при скролле */
 html {
-    scroll-padding-top: 100px;
+    scroll-padding-top: calc(120px + var(--safe-area-top));
 }
 
 @media (max-width: 768px) {
     html {
-        scroll-padding-top: 120px;
+        scroll-padding-top: calc(130px + var(--safe-area-top));
     }
+}
+
+/* Улучшение производительности анимаций */
+.lemon {
+    will-change: transform;
+}
+
+.hero-content {
+    will-change: transform, opacity;
 }
