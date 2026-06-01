@@ -1,11 +1,13 @@
-// Установка CSS переменных для safe-area
+// ======================== ВАШ URL ИЗ APPS SCRIPT ========================
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTdc0clLLMLWtqDZJt970POrV7-jhyGapUvNYSvazKn2pOezU9RGPDZPsoNW_ubrCwvQ/exec'; // СЮДА ВСТАВЬТЕ ВАШ URL
+
+// ======================== ОСТАЛЬНЫЕ ФУНКЦИИ ==============================
 function setSafeAreaVariables() {
   const root = document.documentElement;
   const safeAreaTop = getComputedStyle(root).getPropertyValue('--safe-area-top') || '0px';
   root.style.setProperty('--computed-safe-area-top', safeAreaTop);
 }
 
-// Счетчик обратного времени
 function updateCountdown() {
   const weddingDate = new Date('2026-09-05T15:00:00').getTime();
   const now = new Date().getTime();
@@ -15,25 +17,16 @@ function updateCountdown() {
   const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-  if (document.getElementById('days')) {
-    document.getElementById('days').textContent = days.toString().padStart(3, '0');
-  }
-  if (document.getElementById('hours')) {
-    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-  }
-  if (document.getElementById('minutes')) {
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-  }
+  if (document.getElementById('days')) document.getElementById('days').textContent = days.toString().padStart(3, '0');
+  if (document.getElementById('hours')) document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+  if (document.getElementById('minutes')) document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
 
   if (distance < 0) {
     const countdownElement = document.getElementById('countdown');
-    if (countdownElement) {
-      countdownElement.innerHTML = '<div class="countdown-item"><span class="countdown-number">🎉</span><span class="countdown-label">Свадьба сегодня!</span></div>';
-    }
+    if (countdownElement) countdownElement.innerHTML = '<div class="countdown-item"><span class="countdown-number">🎉</span><span class="countdown-label">Свадьба сегодня!</span></div>';
   }
 }
 
-// Создание анимированных лимонов
 function createLemonAnimation() {
   const container = document.getElementById('lemon-animation');
   if (!container) return;
@@ -53,37 +46,25 @@ function createLemonAnimation() {
   }
 }
 
-// Отправка данных в Google Таблицу через веб-приложение (CORS)
+// Отправка данных – самый надёжный способ (без mode:no-cors, с правильной обработкой)
 async function submitToGoogleSheets(formData) {
-  // ⚠️ ВСТАВЬТЕ СВОЙ URL ИЗ APPS SCRIPT
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTdc0clLLMLWtqDZJt970POrV7-jhyGapUvNYSvazKn2pOezU9RGPDZPsoNW_ubrCwvQ/exec';
-
   try {
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const result = await response.json();
-    if (result.result === 'success') {
-      return { success: true };
-    } else {
-      throw new Error(result.error || 'Неизвестная ошибка');
-    }
+    return result.result === 'success';
   } catch (error) {
-    console.error('Ошибка отправки в Google Sheets:', error);
-    return { success: false, error: error.message };
+    console.error('Fetch error:', error);
+    return false;
   }
 }
 
-// Обработка формы RSVP
+// Инициализация формы
 function initRSVPForm() {
   const form = document.getElementById('rsvpForm');
   if (!form) return;
@@ -91,41 +72,30 @@ function initRSVPForm() {
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nameField = document.getElementById('name');
-    const guestsField = document.getElementById('guests');
-    const accommodationField = document.getElementById('accommodation');
-    const messageField = document.getElementById('message');
-
     const formData = {
-      name: nameField.value,
-      guests: guestsField.value,
-      accommodation: accommodationField.value,
-      message: messageField.value,
-      timestamp: new Date().toLocaleString('ru-RU')
+      name: document.getElementById('name').value,
+      guests: document.getElementById('guests').value,
+      accommodation: document.getElementById('accommodation').value,
+      message: document.getElementById('message').value
     };
 
-    // Резервное сохранение в localStorage
+    // Локальное резервное копирование
     try {
       const responses = JSON.parse(localStorage.getItem('weddingRSVP') || '[]');
       responses.push(formData);
       localStorage.setItem('weddingRSVP', JSON.stringify(responses));
-    } catch (err) {
-      console.log('Ошибка сохранения в localStorage:', err);
-    }
+    } catch (err) {}
 
-    // Отправка в Google Sheets
-    const result = await submitToGoogleSheets(formData);
-
-    if (result.success) {
-      alert('Ждём вас на нашей свадьбе!');  // ← новое сообщение
+    const success = await submitToGoogleSheets(formData);
+    if (success) {
+      alert('Ждём вас на нашей свадьбе!');
       form.reset();
     } else {
-      alert(`Произошла ошибка: ${result.error}\nДанные сохранены локально. Мы свяжемся с вами позже.`);
+      alert('Данные сохранены локально. Мы свяжемся с вами позже.');
     }
   });
 }
 
-// Плавная прокрутка для навигации
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -137,85 +107,64 @@ function initSmoothScroll() {
         const nav = document.querySelector('.main-nav');
         const navHeight = nav ? nav.offsetHeight : 0;
         const isMobile = window.innerWidth <= 768;
-        const additionalOffset = isMobile ? 30 : 20;
-        const offsetTop = target.offsetTop - navHeight - additionalOffset;
-        window.scrollTo({
-          top: Math.max(offsetTop, 0),
-          behavior: 'smooth'
-        });
+        const offsetTop = target.offsetTop - navHeight - (isMobile ? 30 : 20);
+        window.scrollTo({ top: Math.max(offsetTop, 0), behavior: 'smooth' });
       }
     });
   });
 }
 
-// Динамическое определение высоты навигации
 function setHeroPadding() {
   const nav = document.querySelector('.main-nav');
   const hero = document.querySelector('.hero');
   if (nav && hero) {
     const navHeight = nav.offsetHeight;
     const isMobile = window.innerWidth <= 768;
-    const paddingTop = isMobile ? (navHeight + 20) + 'px' : (navHeight + 10) + 'px';
-    hero.style.paddingTop = `calc(${paddingTop} + var(--safe-area-top))`;
+    const paddingTop = isMobile ? navHeight + 20 : navHeight + 10;
+    hero.style.paddingTop = `calc(${paddingTop}px + var(--safe-area-top))`;
   }
 }
 
-// Оптимизация для мобильных устройств
 function optimizeForMobile() {
-  const isMobile = window.innerWidth <= 768;
-  if (isMobile) {
+  if (window.innerWidth <= 768) {
     const container = document.getElementById('lemon-animation');
-    if (container) {
-      const lemons = container.querySelectorAll('.lemon');
-      if (lemons.length > 20) {
-        for (let i = 20; i < lemons.length; i++) {
-          container.removeChild(lemons[i]);
-        }
-      }
+    if (container && container.children.length > 20) {
+      for (let i = 20; i < container.children.length; i++) container.removeChild(container.children[i]);
     }
   }
 }
 
-// Основная инициализация (без вызова undefined функции)
+// Заглушка для музыкального плеера (если не используется)
+function initMusicPlayer() {}
+
 document.addEventListener('DOMContentLoaded', function () {
   setSafeAreaVariables();
   updateCountdown();
   createLemonAnimation();
-  // initMusicPlayer();  // <-- УДАЛИТЕ ЭТУ СТРОКУ или раскомментируйте, если функция существует
+  initMusicPlayer();
   initRSVPForm();
   initSmoothScroll();
   setHeroPadding();
   optimizeForMobile();
 
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', () => {
     setSafeAreaVariables();
     setHeroPadding();
     optimizeForMobile();
   });
-  
-  window.addEventListener('load', function() {
+  window.addEventListener('load', () => {
     setSafeAreaVariables();
     setHeroPadding();
   });
-  
-  window.addEventListener('orientationchange', function() {
-    setTimeout(() => {
-      setSafeAreaVariables();
-      setHeroPadding();
-      optimizeForMobile();
-    }, 300);
-  });
+  window.addEventListener('orientationchange', () => setTimeout(() => {
+    setSafeAreaVariables();
+    setHeroPadding();
+    optimizeForMobile();
+  }, 300));
 
   setInterval(updateCountdown, 60000);
 });
 
-// Если у вас всё же где-то нужна музыка – добавьте пустую функцию, чтобы избежать ошибки
-function initMusicPlayer() {
-  // Заглушка – если плеер не используется, ничего не делаем
-  console.log('Музыкальный плеер отключён');
-}
-
-// Fallback для safe-area
 if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
   document.documentElement.classList.add('safe-area-supported');
 } else {
