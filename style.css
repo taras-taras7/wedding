@@ -1,3 +1,13 @@
+/* ========== ПОДКЛЮЧЕНИЕ ЛОКАЛЬНОГО ШРИФТА ========== */
+@font-face {
+    font-family: 'Good Vibes Pro';
+    src: url('assets/fonts/GoodVibesPro.ttf') format('truetype'),
+         url('assets/fonts/GoodVibesPro.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Базовые стили */
 * {
     margin: 0;
@@ -101,7 +111,7 @@ body {
     animation: float 10s ease-in-out infinite;
     filter: blur(0.8px);
     box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.3);
+                inset 2px 2px 5px rgba(255, 255, 255, 0.3);
 }
 
 .lemon::after {
@@ -132,15 +142,9 @@ body {
 }
 
 @keyframes float {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg) scale(1);
-    }
-    33% {
-        transform: translateY(-30px) rotate(3deg) scale(1.05);
-    }
-    66% {
-        transform: translateY(15px) rotate(-2deg) scale(0.95);
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+    33% { transform: translateY(-30px) rotate(3deg) scale(1.05); }
+    66% { transform: translateY(15px) rotate(-2deg) scale(0.95); }
 }
 
 /* Герой-секция */
@@ -171,18 +175,13 @@ body {
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(60px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
+/* ПРИМЕНЕНИЕ ЛОКАЛЬНОГО ШРИФТА К ИМЕНАМ */
 .main-title {
-    font-family: 'Parisienne', cursive;
+    font-family: 'Good Vibes Pro', 'Parisienne', cursive;
     font-size: 4rem;
     font-weight: 400;
     color: var(--vine-green);
@@ -194,22 +193,13 @@ body {
 }
 
 @keyframes titleAnimation {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-        filter: blur(5px);
-    }
-    60% {
-        transform: translateY(-5px) scale(1.02);
-        filter: blur(0px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    0% { opacity: 0; transform: translateY(30px) scale(0.9); filter: blur(5px); }
+    60% { transform: translateY(-5px) scale(1.02); filter: blur(0px); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .ampersand {
+    font-family: 'Good Vibes Pro', 'Parisienne', cursive;
     color: var(--lemon-green);
     font-size: 3.5rem;
     margin: 0 1rem;
@@ -219,14 +209,8 @@ body {
 }
 
 @keyframes gentlePulse {
-    0%, 100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 0.8;
-    }
-    50% {
-        transform: scale(1.08) rotate(2deg);
-        opacity: 1;
-    }
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+    50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
 }
 
 .wedding-date {
@@ -240,12 +224,8 @@ body {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .invitation-text {
@@ -257,7 +237,7 @@ body {
     line-height: 1.6;
 }
 
-/* Счетчик */
+/* Счётчик */
 .countdown-container {
     margin-top: 2.5rem;
     animation: fadeIn 3s ease-out 1.2s both;
@@ -278,17 +258,9 @@ body {
 }
 
 @keyframes gentleBounce {
-    0% {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    0% { transform: translateY(20px); opacity: 0; }
+    60% { transform: translateY(-5px); }
+    100% { transform: translateY(0); opacity: 1; }
 }
 
 .countdown-number {
@@ -328,21 +300,19 @@ section {
     font-weight: 500;
 }
 
-/* Виноградная лоза */
 .vine-decoration {
     width: 100px;
     height: 20px;
     margin: 0 auto;
     background: radial-gradient(circle at 50% 0%, var(--vine-green) 30%, transparent 30%),
-        radial-gradient(circle at 50% 100%, var(--vine-green) 30%, transparent 30%);
+                radial-gradient(circle at 50% 100%, var(--vine-green) 30%, transparent 30%);
     background-size: 20px 20px;
     opacity: 0.6;
 }
 
 /* История любви */
 .love-story {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
-        url('assets/lemon-branches-bg.jpg') center/cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('assets/lemon-branches-bg.jpg') center/cover;
     position: relative;
     scroll-margin-top: calc(120px + var(--safe-area-top));
 }
@@ -413,7 +383,7 @@ section {
     font-weight: bold;
 }
 
-/* Детали свадьбы */
+/* Детали */
 .details {
     background: linear-gradient(135deg, var(--pastel-green) 0%, var(--pastel-blue) 100%);
 }
@@ -590,15 +560,9 @@ section {
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
 .location-features {
@@ -723,37 +687,6 @@ section {
     font-weight: 300;
 }
 
-/* Аудио контролы */
-.music-controls {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 1000;
-}
-
-.music-btn {
-    background: rgba(45, 80, 22, 0.9);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    transition: all 0.4s ease;
-    backdrop-filter: blur(10px);
-}
-
-.music-btn:hover {
-    background: rgba(143, 188, 143, 0.9);
-    transform: scale(1.15) rotate(15deg);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
 /* Футер */
 .footer {
     background: var(--vine-green);
@@ -774,28 +707,23 @@ section {
     .main-nav {
         min-height: calc(60px + var(--safe-area-top));
     }
-
     .main-nav ul {
         padding: 0.8rem 0;
     }
-
     .main-nav a {
         padding: 0.4rem 0.8rem;
         font-size: 0.95rem;
         margin: 0.2rem;
     }
-
     .hero {
         padding-top: calc(90px + var(--safe-area-top));
         padding-bottom: 1.5rem;
         min-height: 100vh;
     }
-
     .hero-content {
         padding: 2rem 1.5rem;
         margin: 1rem 0.5rem;
     }
-
     .main-title {
         font-size: 2.8rem;
         line-height: 1.2;
@@ -804,115 +732,83 @@ section {
         flex-direction: column;
         gap: 0.5rem;
     }
-
     .name-part {
         display: block;
     }
-
     .ampersand {
         font-size: 2.2rem;
         margin: 0.5rem 0;
     }
-
     .wedding-date {
         font-size: 1.4rem;
         margin-bottom: 1.5rem;
     }
-
     .invitation-text {
         font-size: 1.1rem;
         margin-bottom: 2rem;
         line-height: 1.5;
     }
-
     .countdown {
         gap: 1.5rem;
     }
-
     .countdown-item {
         min-width: 70px;
     }
-
     .countdown-number {
         font-size: 2rem;
     }
-
     .countdown-label {
         font-size: 0.8rem;
     }
-
     section {
         padding: 4rem 0;
         scroll-margin-top: calc(110px + var(--safe-area-top));
     }
-
     .love-story {
         scroll-margin-top: calc(130px + var(--safe-area-top));
     }
-
     .story-item,
     .story-item.reverse {
         flex-direction: column;
         gap: 1.5rem;
         margin-bottom: 3rem;
     }
-
     .story-content {
         padding: 1.5rem;
         font-size: 1.1rem;
     }
-
     .story-content h3 {
         font-size: 1.7rem;
     }
-
     .location-content {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
     .gift-card {
         flex-direction: column;
     }
-
     .gift-image {
         min-height: 200px;
         padding: 2rem;
     }
-
     .gift-content {
         padding: 2rem;
     }
-
     .details-grid {
         grid-template-columns: 1fr;
         justify-items: center;
         gap: 1.5rem;
     }
-
     .detail-card {
         max-width: 100%;
         padding: 1.5rem;
     }
-
     .important-note {
         flex-direction: column;
         text-align: center;
         gap: 0.5rem;
         padding: 1rem;
     }
-
-    .music-controls {
-        bottom: 20px;
-        right: 20px;
-    }
-
-    .music-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.4rem;
-    }
-
     .section-header h2 {
         font-size: 2.2rem;
     }
@@ -923,48 +819,37 @@ section {
         padding-top: calc(85px + var(--safe-area-top));
         padding-bottom: 1rem;
     }
-
     .hero-content {
         padding: 1.5rem 1rem;
     }
-
     .main-title {
         font-size: 2.2rem;
     }
-
     .ampersand {
         font-size: 1.8rem;
     }
-
     .wedding-date {
         font-size: 1.2rem;
     }
-
     .invitation-text {
         font-size: 1rem;
     }
-
     .countdown {
         gap: 1rem;
     }
-
     .countdown-number {
         font-size: 1.8rem;
     }
-
     .dress-code-colors {
         gap: 15px;
     }
-
     .color-swatch {
         width: 25px;
         height: 25px;
     }
-
     section {
         padding: 3rem 0;
     }
-
     .story-image {
         min-height: 200px;
     }
@@ -975,33 +860,27 @@ section {
         padding-top: calc(80px + var(--safe-area-top));
         min-height: 100vh;
     }
-
     .main-title {
         font-size: 2.5rem;
     }
-
     .hero-content {
         padding: 1.5rem;
         margin: 0.5rem;
     }
-
     .countdown {
         gap: 1rem;
     }
 }
 
-/* Исправление для iOS Safari */
 @supports (-webkit-touch-callout: none) {
     .hero {
         min-height: -webkit-fill-available;
     }
-    
     body {
         min-height: -webkit-fill-available;
     }
 }
 
-/* Убедимся, что навигация не перекрывает контент при скролле */
 html {
     scroll-padding-top: calc(120px + var(--safe-area-top));
 }
@@ -1012,7 +891,6 @@ html {
     }
 }
 
-/* Улучшение производительности анимаций */
 .lemon {
     will-change: transform;
 }
