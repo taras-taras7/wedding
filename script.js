@@ -55,7 +55,7 @@ function createLemonAnimation() {
 
 // Отправка данных в Google Таблицу (веб-приложение Apps Script)
 async function submitToGoogleSheets(formData) {
-  const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbyTdc0clLLMLWtqDZJt970POrV7-jhyGapUvNYSvazKn2pOezU9RGPDZPsoNW_ubrCwvQ/exec ; // <-- СЮДА ВСТАВЬТЕ СКОПИРОВАННЫЙ URL
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTdc0clLLMLWtqDZJt970POrV7-jhyGapUvNYSvazKn2pOezU9RGPDZPsoNW_ubrCwvQ/exec' ; // <-- СЮДА ВСТАВЬТЕ СКОПИРОВАННЫЙ URL
 
   try {
     const response = await fetch(GOOGLE_SCRIPT_URL, {
