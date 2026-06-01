@@ -59,59 +59,6 @@ function createLemonAnimation() {
     }
 }
 
-// Управление музыкой
-function initMusicPlayer() {
-    const music = document.getElementById('background-music');
-    const toggleBtn = document.getElementById('music-toggle');
-
-    if (!music || !toggleBtn) return;
-
-    let isPlaying = false;
-
-    const playMusic = () => {
-        music.volume = 0.3;
-        music.play().then(() => {
-            isPlaying = true;
-            toggleBtn.textContent = '🔊';
-            toggleBtn.style.background = 'rgba(143, 188, 143, 0.9)';
-        }).catch(error => {
-            console.log('Autoplay blocked:', error);
-            toggleBtn.textContent = '🎵';
-            isPlaying = false;
-        });
-    };
-
-    // Пытаемся запустить автоматически
-    playMusic();
-
-    // Запуск по клику на странице
-    document.addEventListener('click', function initOnClick() {
-        if (!isPlaying) {
-            playMusic();
-        }
-        document.removeEventListener('click', initOnClick);
-    });
-
-    toggleBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (isPlaying) {
-            music.pause();
-            toggleBtn.textContent = '🎵';
-            toggleBtn.style.background = 'rgba(45, 80, 22, 0.9)';
-        } else {
-            music.play().then(() => {
-                toggleBtn.textContent = '🔊';
-                toggleBtn.style.background = 'rgba(143, 188, 143, 0.9)';
-            }).catch(error => {
-                console.log('Play failed:', error);
-            });
-        }
-        isPlaying = !isPlaying;
-    });
-}
-
 // Обработка формы RSVP
 function initRSVPForm() {
     const form = document.getElementById('rsvpForm');
