@@ -1,5 +1,5 @@
 // ⚠️ ВСТАВЬТЕ СВОЙ URL ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwWk6d3nuD4JsekJL4IxxAdVI2ccBSFbsd2ZF5eN3jcUc2TbRRgqbcqqzJ-y-IiXZKMFg/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP9jAJQLjwFjLvUn11eyOsLeAnGUmxW4H2WzcF3O9IAgSaYbHp7eVotKR5EPZZBQzZhA/exec';
 
 // ---------------------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------------------
 function setSafeAreaVariables() {
