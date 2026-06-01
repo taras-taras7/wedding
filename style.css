@@ -1,8 +1,8 @@
 /* ========== ПОДКЛЮЧЕНИЕ ЛОКАЛЬНОГО ШРИФТА ========== */
 @font-face {
     font-family: 'Good Vibes Pro';
-    src: url('assets/fonts/GoodVibesPro.ttf') format('truetype'),
-         url('assets/fonts/GoodVibesPro.otf') format('opentype');
+    src: url('assets/GoodVibesPro.ttf') format('truetype'),
+         url('assets/GoodVibesPro.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
