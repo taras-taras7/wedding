@@ -53,29 +53,37 @@ function createLemonAnimation() {
   }
 }
 
-// Отправка данных в Google Таблицу (веб-приложение Apps Script)
+// Отправка данных в Google Таблицу через веб-приложение (CORS)
 async function submitToGoogleSheets(formData) {
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTdc0clLLMLWtqDZJt970POrV7-jhyGapUvNYSvazKn2pOezU9RGPDZPsoNW_ubrCwvQ/exec' ; // <-- СЮДА ВСТАВЬТЕ СКОПИРОВАННЫЙ URL
+  // ⚠️ ВСТАВЬТЕ СВОЙ URL ИЗ APPS SCRIPT
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTdc0clLLMLWtqDZJt970POrV7-jhyGapUvNYSvazKn2pOezU9RGPDZPsoNW_ubrCwvQ/exec';
 
   try {
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',       // Важно для отправки на сторонний домен без CORS-блокировки
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData)
     });
-    // При использовании mode: 'no-cors' мы не можем прочитать ответ,
-    // но запрос всё равно будет выполнен. Google Apps Script получит данные.
-    return { success: true };
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    if (result.result === 'success') {
+      return { success: true };
+    } else {
+      throw new Error(result.error || 'Неизвестная ошибка');
+    }
   } catch (error) {
     console.error('Ошибка отправки в Google Sheets:', error);
     return { success: false, error: error.message };
   }
 }
 
-// Обработка формы RSVP (с сохранением в Google Sheets + localStorage как резерв)
+// Обработка формы RSVP
 function initRSVPForm() {
   const form = document.getElementById('rsvpForm');
   if (!form) return;
@@ -83,15 +91,20 @@ function initRSVPForm() {
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
+    const nameField = document.getElementById('name');
+    const guestsField = document.getElementById('guests');
+    const accommodationField = document.getElementById('accommodation');
+    const messageField = document.getElementById('message');
+
     const formData = {
-      name: document.getElementById('name').value,
-      guests: document.getElementById('guests').value,
-      accommodation: document.getElementById('accommodation').value,
-      message: document.getElementById('message').value,
+      name: nameField.value,
+      guests: guestsField.value,
+      accommodation: accommodationField.value,
+      message: messageField.value,
       timestamp: new Date().toLocaleString('ru-RU')
     };
 
-    // Сначала сохраняем в локальное хранилище (резервная копия)
+    // Резервное сохранение в localStorage
     try {
       const responses = JSON.parse(localStorage.getItem('weddingRSVP') || '[]');
       responses.push(formData);
@@ -100,14 +113,14 @@ function initRSVPForm() {
       console.log('Ошибка сохранения в localStorage:', err);
     }
 
-    // Отправляем в Google Таблицу
+    // Отправка в Google Sheets
     const result = await submitToGoogleSheets(formData);
 
     if (result.success) {
-      alert(`Спасибо, ${formData.name}! Ваше присутствие подтверждено. Ждём вас на свадьбе!`);
+      alert('Ждём вас на нашей свадьбе!');  // ← новое сообщение
       form.reset();
     } else {
-      alert(`Произошла ошибка при отправке: ${result.error || 'попробуйте позже'}\nДанные сохранены локально, мы свяжемся с вами.`);
+      alert(`Произошла ошибка: ${result.error}\nДанные сохранены локально. Мы свяжемся с вами позже.`);
     }
   });
 }
@@ -163,12 +176,12 @@ function optimizeForMobile() {
   }
 }
 
-// Основная инициализация
+// Основная инициализация (без вызова undefined функции)
 document.addEventListener('DOMContentLoaded', function () {
   setSafeAreaVariables();
   updateCountdown();
   createLemonAnimation();
-  initMusicPlayer();   // если у вас есть функция для музыки – оставляем
+  // initMusicPlayer();  // <-- УДАЛИТЕ ЭТУ СТРОКУ или раскомментируйте, если функция существует
   initRSVPForm();
   initSmoothScroll();
   setHeroPadding();
@@ -196,9 +209,10 @@ document.addEventListener('DOMContentLoaded', function () {
   setInterval(updateCountdown, 60000);
 });
 
-// Если у вас была функция initMusicPlayer – оставьте её здесь (она не удалялась)
+// Если у вас всё же где-то нужна музыка – добавьте пустую функцию, чтобы избежать ошибки
 function initMusicPlayer() {
-  // ваш код музыкального плеера (если был)
+  // Заглушка – если плеер не используется, ничего не делаем
+  console.log('Музыкальный плеер отключён');
 }
 
 // Fallback для safe-area
